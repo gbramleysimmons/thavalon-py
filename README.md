@@ -27,25 +27,22 @@ uvicorn app.main:app --reload --port 4444
 Interactive API docs are then available at `http://localhost:4444/docs`.
 
 ## Deploy (Azure App Service)
-A GitHub Actions workflow (`.github/workflows/azure-webapp.yml`) builds, tests,
-and deploys the app to an Azure Web App on every push to `master`.
+Deployment is handled by the GitHub Actions workflow
+`.github/workflows/master_thavalon-py.yml`, which Azure's **Deployment Center**
+generates when you connect the Web App to this repo. It builds and deploys to a
+**Linux Python 3.11** Web App on every push to `master`, authenticating with
+GitHub via OIDC (the federated-credential secrets are created for you).
 
-One-time setup:
-1. Create a **Linux Python 3.11** Web App in Azure (the workflow targets the app
-   named `thavalon-py` — edit `AZURE_WEBAPP_NAME` in the workflow if yours
-   differs).
-2. In the Azure portal, choose **Get publish profile** and copy the XML.
-3. In GitHub: **Settings → Secrets and variables → Actions** and add a secret
-   named `AZURE_WEBAPP_PUBLISH_PROFILE` with that XML.
-4. In the Web App's **App settings**, add `SCM_DO_BUILD_DURING_DEPLOYMENT=true`
-   so Azure's Oryx builder installs `requirements.txt` on the server. Without
-   it the app won't start and the site shows the default Azure landing page.
-
-Azure's Oryx builder installs `requirements.txt` on the server, and the workflow
-sets the startup command to serve the app in production:
+Connecting the app in **Deployment Center** also sets
+`SCM_DO_BUILD_DURING_DEPLOYMENT=true`, so Azure's Oryx builder installs
+`requirements.txt` on the server. The deploy step sets the production startup
+command so the app actually starts:
 ```bash
 gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
+Without that startup command Oryx falls back to `gunicorn app:app`, which can't
+find the app (it lives at `app.main:app`), and the site shows the default Azure
+landing page.
 
 ## Web UI (play in person)
 A mobile-first web app is bundled with the server and served at the **site
