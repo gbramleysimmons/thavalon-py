@@ -26,6 +26,24 @@ uvicorn app.main:app --reload --port 4444
 ```
 Interactive API docs are then available at `http://localhost:4444/docs`.
 
+## Web UI (play in person)
+A mobile-first web app is bundled with the server and lives at
+`http://localhost:4444/app/` (the bare `/ui` redirects there). It surfaces all
+of the functionality needed to run a game face-to-face:
+
+- **Roll a game** — add players (5, 7, 8, or 10) and roll a standard game, or
+  flip on **Custom roles** to choose the role pool and enable duplicate roles.
+- **Pass-the-phone reveal** — tap a player's name for a privacy gate, then
+  reveal that player's role, flavour text, and secret information on one card.
+- **Do Not Open** — a full-table reference listing every role and clue.
+- **Re-open games** — open by id or tap one of the recent games.
+- **End game** — clears the game from the server.
+
+The UI talks to the same-origin REST API, so just point everyone's phones at
+the server's address. To host the UI separately, serve the files in
+`app/static/` and set `API_BASE` at the top of `app/static/app.js` to the
+server origin.
+
 ## Test & lint
 ```bash
 pytest          # run the test suite
