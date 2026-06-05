@@ -36,7 +36,7 @@ def _roll_game(req: NamesRequest) -> Game:
     return ruleset.make_game(list(req.names))
 
 
-@router.get("/")
+@router.get("/health")
 def health() -> str:
     return "Thavalon API"
 

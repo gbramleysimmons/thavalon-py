@@ -22,7 +22,7 @@ def _roll(client: TestClient, size: int = 5) -> str:
 
 
 def test_health(client: TestClient) -> None:
-    assert client.get("/").json() == "Thavalon API"
+    assert client.get("/health").json() == "Thavalon API"
 
 
 def test_roll_and_fetch_info(client: TestClient) -> None:

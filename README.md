@@ -27,15 +27,17 @@ uvicorn app.main:app --reload --port 4444
 Interactive API docs are then available at `http://localhost:4444/docs`.
 
 ## Web UI (play in person)
-A mobile-first web app is bundled with the server and lives at
-`http://localhost:4444/app/` (the bare `/ui` redirects there). It surfaces all
-of the functionality needed to run a game face-to-face:
+A mobile-first web app is bundled with the server and served at the **site
+root** (`http://localhost:4444/`), so attaching a domain lands players straight
+on the game start screen. It surfaces all of the functionality needed to run a
+game face-to-face:
 
 - **Roll a game** — add players (5, 7, 8, or 10) and roll a standard game, or
   flip on **Custom roles** to choose the role pool and enable duplicate roles.
-- **Pass-the-phone reveal** — tap a player's name for a privacy gate, then
-  reveal that player's role, flavour text, and secret information on one card.
-- **Do Not Open** — a full-table reference listing every role and clue.
+- **See your role** — each player opens the game on their own phone and taps
+  their name to reveal their role, flavour text, and secret information.
+- **Do Not Open** — a full-table reference (behind a confirm) listing every
+  role and clue.
 - **Re-open games** — open by id or tap one of the recent games.
 - **End game** — clears the game from the server.
 
@@ -60,7 +62,7 @@ All bodies are JSON.
 | `GET /isGame/{id}` | Does a game id exist? | — | `true` / `false` |
 | `POST /gameover/{id}` | End game, clear it | `{ result?, record? }` (ignored) | `true` if the id still existed |
 | `POST /currentgames` | Most recent game ids | `{ numGames }` | `string[]`, newest first |
-| `GET /` | Health check | — | `"Thavalon API"` |
+| `GET /health` | Health check | — | `"Thavalon API"` |
 
 ### Player object (`GET /game/info/{id}`)
 ```jsonc

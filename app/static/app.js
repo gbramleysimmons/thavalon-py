@@ -455,20 +455,8 @@ function closeOverlay() {
 function revealPlayer(index) {
   const player = currentGame.players[index];
   if (!player) return;
-  const el = ensureOverlay();
-  // Phase 1: privacy gate so the phone can be handed over face-down.
-  el.innerHTML = `
-    <div class="overlay-inner gate">
-      <h1>Pass the phone to</h1>
-      <p class="muted">Only ${esc(player.name)} should look.</p>
-      <h1 style="margin-bottom:28px">${esc(player.name)}</h1>
-      <button id="reveal-btn" class="btn-primary btn-block big">Reveal my role</button>
-      <button id="gate-cancel" class="btn-block btn-ghost">Cancel</button>
-    </div>`;
-  document.getElementById("reveal-btn").addEventListener("click", () =>
-    showRevealCard(player)
-  );
-  document.getElementById("gate-cancel").addEventListener("click", closeOverlay);
+  // Each player is on their own phone, so show the role card directly.
+  showRevealCard(player);
 }
 
 function showRevealCard(player) {
