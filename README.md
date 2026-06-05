@@ -28,7 +28,7 @@ Interactive API docs are then available at `http://localhost:4444/docs`.
 
 ## Deploy (Azure App Service)
 A GitHub Actions workflow (`.github/workflows/azure-webapp.yml`) builds, tests,
-and deploys the app to an Azure Web App on every push to `main`.
+and deploys the app to an Azure Web App on every push to `master`.
 
 One-time setup:
 1. Create a **Linux Python 3.11** Web App in Azure (the workflow targets the app
