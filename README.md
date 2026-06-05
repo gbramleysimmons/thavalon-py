@@ -32,7 +32,7 @@ and deploys the app to an Azure Web App on every push to `master`.
 
 One-time setup:
 1. Create a **Linux Python 3.11** Web App in Azure (the workflow targets the app
-   named `thavalon-vnext` — edit `AZURE_WEBAPP_NAME` in the workflow if yours
+   named `thavalon-py` — edit `AZURE_WEBAPP_NAME` in the workflow if yours
    differs).
 2. In the Azure portal, choose **Get publish profile** and copy the XML.
 3. In GitHub: **Settings → Secrets and variables → Actions** and add a secret

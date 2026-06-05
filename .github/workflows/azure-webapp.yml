@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: thavalon-vnext
+  AZURE_WEBAPP_NAME: thavalon-py
   PYTHON_VERSION: "3.11"
 
 permissions:
