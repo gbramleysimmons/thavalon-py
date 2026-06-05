@@ -462,7 +462,6 @@ function showRules() {
   el.innerHTML = `
     <div class="overlay-inner rules-content">
       <h1>How to Play</h1>
-      <p class="subtitle">A quick guide for new knights</p>
 
       <h2>Overview</h2>
       <p>THavalon is a custom ruleset for the social-deception game
