@@ -26,6 +26,24 @@ uvicorn app.main:app --reload --port 4444
 ```
 Interactive API docs are then available at `http://localhost:4444/docs`.
 
+## Deploy (Azure App Service)
+A GitHub Actions workflow (`.github/workflows/azure-webapp.yml`) builds, tests,
+and deploys the app to an Azure Web App on every push to `main`.
+
+One-time setup:
+1. Create a **Linux Python 3.11** Web App in Azure (the workflow targets the app
+   named `thavalon-vnext` — edit `AZURE_WEBAPP_NAME` in the workflow if yours
+   differs).
+2. In the Azure portal, choose **Get publish profile** and copy the XML.
+3. In GitHub: **Settings → Secrets and variables → Actions** and add a secret
+   named `AZURE_WEBAPP_PUBLISH_PROFILE` with that XML.
+
+Azure's Oryx builder installs `requirements.txt` on the server, and the workflow
+sets the startup command to serve the app in production:
+```bash
+gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+```
+
 ## Web UI (play in person)
 A mobile-first web app is bundled with the server and served at the **site
 root** (`http://localhost:4444/`), so attaching a domain lands players straight

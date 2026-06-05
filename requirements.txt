@@ -1,0 +1,6 @@
+# Runtime dependencies for production deployment (e.g. Azure App Service Oryx
+# build). Keep in sync with [project.dependencies] in pyproject.toml.
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.5
+gunicorn>=21.2
