@@ -138,8 +138,8 @@ function renderHome() {
   const count = draft.players.length;
   const valid = SUPPORTED_COUNTS.includes(count);
   view().innerHTML = `
-    <h1 class="flourish">Assemble the Table</h1>
-    <h2>Name the knights, then deal their fates</h2>
+    <h1>New game</h1>
+    <h2>Add players, then roll roles</h2>
     <div id="error-slot"></div>
 
     <div class="card">
@@ -183,7 +183,7 @@ function renderHome() {
       </div>
     </div>
 
-    <button id="roll-btn" class="btn-primary btn-block">Deal Roles</button>
+    <button id="roll-btn" class="btn-primary btn-block">Roll game</button>
 
     <div class="card" style="margin-top:24px">
       <h3>Open an existing game</h3>
@@ -288,7 +288,7 @@ async function rollGame() {
   }
   const btn = document.getElementById("roll-btn");
   btn.disabled = true;
-  btn.textContent = "Dealing…";
+  btn.textContent = "Rolling…";
   try {
     const data = await postJSON("/names", body);
     if (data && data.error) return showError(data.error);
@@ -301,7 +301,7 @@ async function rollGame() {
     showError("Could not reach the server.");
   } finally {
     btn.disabled = false;
-    btn.textContent = "Deal Roles";
+    btn.textContent = "Roll game";
   }
 }
 
@@ -372,7 +372,7 @@ async function renderGame(id, seq) {
       <strong>${esc(starter)}</strong>
     </div>
 
-    <h2>Tap your name to learn your fate</h2>
+    <h2>Tap your name to see your role</h2>
     <div class="player-buttons">
       ${game
         .map(
