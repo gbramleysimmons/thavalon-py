@@ -5,7 +5,7 @@ from typing import Dict, List
 
 from app.domain.enums import Alignment, Card, RoleName, UpdaterPriority
 from app.domain.game import Game
-from app.domain.information import PairSeen, RolePresent, SingleSeen
+from app.domain.information import Alert, PairSeen, RolePresent, SingleSeen
 from app.domain.role import Role, Updater
 
 
@@ -156,6 +156,12 @@ class Guinevere(Role):
 
         self.information.add(lie)
         self.information.add(truth)
+        self.information.add(
+            Alert(
+                "You see the following rumors, one of which is true, "
+                "and one of which is false"
+            )
+        )
 
     def prepare_information(self) -> Dict[str, List[str]]:
         m = super().prepare_information()
