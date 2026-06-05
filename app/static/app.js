@@ -131,6 +131,10 @@ function render() {
 
 window.addEventListener("hashchange", render);
 window.addEventListener("DOMContentLoaded", render);
+window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("rules-btn");
+  if (btn) btn.addEventListener("click", showRules);
+});
 
 // ----- Home screen ----------------------------------------------------------
 
@@ -450,6 +454,99 @@ function closeOverlay() {
   const el = document.getElementById("overlay");
   if (el) el.remove();
   document.body.style.overflow = "";
+}
+
+// Static rules reference for newer players, adapted from the THavalon ruleset.
+function showRules() {
+  const el = ensureOverlay();
+  el.innerHTML = `
+    <div class="overlay-inner rules-content">
+      <h1>How to Play</h1>
+      <p class="subtitle">A quick guide for new knights</p>
+
+      <h2>Overview</h2>
+      <p>THavalon is a custom ruleset for the social-deception game
+      <em>The Resistance: Avalon</em>. If you've played Avalon, the structure is
+      the same — there are simply many more roles.</p>
+
+      <h2>Good, Evil &amp; Missions</h2>
+      <p>Two teams, <strong>Good</strong> and <strong>Evil</strong>, compete over
+      five missions. Each mission sends a set number of players, who secretly play
+      a card: <em>Pass</em>, <em>Fail</em>, or <em>Reverse</em>. The cards are
+      shuffled and revealed together.</p>
+      <p>A single <em>Fail</em> fails the mission. A <em>Reverse</em> flips the
+      result (only Lancelot and Maelegant may play Reverse). Good wins by passing
+      three missions and surviving assassination; Evil wins by failing three.</p>
+
+      <h2>Proposals</h2>
+      <p>Players propose who goes on each mission, then everyone votes. Mission one
+      is a blind choice between proposals from the two players before the starting
+      player. After that, proposals pass clockwise from the starting player,
+      moving on whenever one is voted down. Each round has a proposal limit
+      (3 with 5 players, 4 with 7–8, 5 with 10); the last proposal is sent
+      automatically.</p>
+
+      <h2>Assassination</h2>
+      <p>If Good passes three missions, Evil gets one chance to assassinate. They
+      may name a pair of Lovers, name Merlin, name Nimue (if included), or declare
+      there are no valid targets. Guess right and Evil wins; guess wrong and Good
+      wins.</p>
+
+      <h2>Inquisition &amp; Hijack (7+ players)</h2>
+      <p><strong>Weak inquisition:</strong> if a round's first proposal is sent,
+      that proposer may secretly view one other player's card.</p>
+      <p><strong>Hijack:</strong> if a round's last proposal is sent, an Evil
+      player with the "Hijack" ability may reveal themselves and swap onto the
+      mission in place of another player.</p>
+
+      <h2>Default Roles</h2>
+      <div class="note">No duplicates or Lone Lovers by default.
+        <div>5 players: Lancelot, Merlin, the Lovers, Percival, Guinevere, Mordred, Morgana, Maelegant, Oberon</div>
+        <div>7 players: add Titania and Arthur</div>
+        <div>8 players: add Agravaine</div>
+        <div>10 players: add Colgrevance</div>
+      </div>
+
+      <h2>Good Roles</h2>
+      <ul>
+        <li><em>Arthur:</em> knows which Good roles are present in the game.</li>
+        <li><em>Galahad:</em> may declare after two failed missions, then run a
+        "night phase" where two requested Good roles reveal themselves to Galahad
+        only.</li>
+        <li><em>Gawain:</em> sees two pairs of players — one pair is on the same
+        team, the other on opposite teams.</li>
+        <li><em>Guinevere:</em> sees two rumors of the form "A sees B"; one is true
+        and one is a lie.</li>
+        <li><em>Lancelot:</em> may play Reverses on missions; appears Evil to
+        Merlin.</li>
+        <li><em>The Lovers (Tristan &amp; Iseult):</em> see each other, always
+        appear together (unless Lone Lovers is enabled), and can be assassinated as
+        a pair.</li>
+        <li><em>Merlin:</em> sees all players who are Evil (except Mordred) or are
+        Lancelot; can be assassinated.</li>
+        <li><em>Nimue:</em> knows which roles are in the game; can be
+        assassinated.</li>
+        <li><em>Percival:</em> sees Merlin and Morgana but cannot tell which is
+        which.</li>
+        <li><em>Titania:</em> adds false information to one Evil player's
+        information.</li>
+      </ul>
+
+      <h2>Evil Roles</h2>
+      <ul>
+        <li><em>Mordred:</em> is hidden from Merlin.</li>
+        <li><em>Morgana:</em> appears like Merlin to Percival.</li>
+        <li><em>Maelegant:</em> may play Reverse cards on missions.</li>
+        <li><em>Oberon:</em> adds false information to one Good player.</li>
+        <li><em>Agravaine:</em> must play Fails; may declare after a successful
+        mission to turn it into a Fail.</li>
+        <li><em>Colgrevance:</em> is hidden from other Evil roles and knows which
+        player has each Evil role.</li>
+      </ul>
+
+      <button id="rules-close" class="btn-primary btn-block" style="margin-top:18px">Close</button>
+    </div>`;
+  document.getElementById("rules-close").addEventListener("click", closeOverlay);
 }
 
 function revealPlayer(index) {
