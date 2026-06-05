@@ -8,6 +8,10 @@ name: Build and deploy to Azure Web App
 #   2. In GitHub: Settings -> Secrets and variables -> Actions -> New repository
 #      secret named AZURE_WEBAPP_PUBLISH_PROFILE, and paste the XML.
 #   3. Make sure the App Service runtime stack is "Python 3.11" (Linux).
+#   4. In the Web App's App settings, add SCM_DO_BUILD_DURING_DEPLOYMENT = true.
+#      This is REQUIRED: it tells Azure's Oryx builder to install
+#      requirements.txt on the server. Without it the app won't start and the
+#      site shows the default Azure landing page.
 #
 # The build job installs deps and runs the test suite; deploy only runs if the
 # build (and tests) pass. Azure's Oryx builder installs requirements.txt on the

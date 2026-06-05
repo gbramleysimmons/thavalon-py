@@ -37,6 +37,9 @@ One-time setup:
 2. In the Azure portal, choose **Get publish profile** and copy the XML.
 3. In GitHub: **Settings → Secrets and variables → Actions** and add a secret
    named `AZURE_WEBAPP_PUBLISH_PROFILE` with that XML.
+4. In the Web App's **App settings**, add `SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+   so Azure's Oryx builder installs `requirements.txt` on the server. Without
+   it the app won't start and the site shows the default Azure landing page.
 
 Azure's Oryx builder installs `requirements.txt` on the server, and the workflow
 sets the startup command to serve the app in production:
